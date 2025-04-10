@@ -3,6 +3,8 @@ from .models import Product, Order, OrderItem
 from .forms import OrderForm, OrderItemFormSet
 from .utils import send_telegram_message  # We'll create this later
 from django.forms import modelformset_factory
+from django.http import JsonResponse
+
 import random
 
 from .cart import Cart
@@ -33,6 +35,10 @@ def add_to_cart(request, product_id):
     product = Product.objects.get(id=product_id)
     cart = Cart(request)
     cart.add(product, quantity=1)
+    
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'cart_item_count': len(cart)})
+    
     return redirect('product_list')
 
 #Update to cart

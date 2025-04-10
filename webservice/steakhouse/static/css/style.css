@@ -592,6 +592,17 @@ h1,h2,h3,h4,h5,h6 {
   background: rgb(240, 56, 56);
   color: #fff;
 }
+header {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  padding: 15px 20px;
+  z-index: 1000;
+}
+header.scrolled {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
 .product-item .qty {
   font-weight: 400;
   font-size: 13px;
@@ -659,7 +670,14 @@ h1,h2,h3,h4,h5,h6 {
   .image-float {
     margin: 0;
   }
+
 }
+@media screen and (max-width:390px) {
+  .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    --bs-gutter-x: auto-fit;
+  }
+}
+
  /* post item */
 .post-item .post-meta {
   font-size: 0.8rem;

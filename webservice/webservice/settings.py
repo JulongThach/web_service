@@ -61,6 +61,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'steakhouse.context_processors.cart_item_count',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -121,12 +122,12 @@ STATIC_URL = '/static/'
 MEDIA_URL  = '/images/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'steakhouse/static')
+    os.path.join(BASE_DIR, 'static')
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-TEMPLATES[0]['DIRS'] = [BASE_DIR / 'steakhouse/templates']
+TEMPLATES[0]['DIRS'] = [BASE_DIR / 'templates']
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 

@@ -57,3 +57,5 @@ class Cart:
             self.cart[product_id]['quantity'] = quantity
             self.save()
     
+    def __len__(self):
+        return sum(item['quantity'] for item in self.cart.values())
