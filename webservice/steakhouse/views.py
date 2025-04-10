@@ -3,12 +3,12 @@ from .models import Product, Order, OrderItem
 from .forms import OrderForm, OrderItemFormSet
 from .utils import send_telegram_message  # We'll create this later
 from django.forms import modelformset_factory
+from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 
 import random
 
 from .cart import Cart
-
 
 # Show Product List
 def product_list(request):
@@ -127,3 +127,10 @@ def order_form(request):
 # Success Page
 def order_success(request):
     return render(request, 'steakhouse/order_success.html')
+
+#Clear Cart
+@require_POST
+def clear_cart(request):
+    request.session['cart'] = {} 
+    request.session.modified = True
+    return JsonResponse({'success': True, 'cart_item_count': 0})
