@@ -3,8 +3,19 @@ from django.db import models
 
 # Product Model
 class Product(models.Model):
+    TYPES = (
+                ('Popular', 'Popular'),
+                ('Mixed Food', 'Mixed Food'),
+                ('Suit', 'Suit'),
+                ('Steak', 'Steak'),
+                ('Spaghetti', 'Spaghetti'),
+                ('Add', 'Add'),
+                ('Drink', 'Drink'),
+            )
     name = models.CharField(max_length=255)
     image = models.ImageField(null=True, blank=True)
+    category = models.CharField(max_length=255, null=True, choices=TYPES)
+    decription = models.CharField(max_length=255, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):

@@ -1,12 +1,19 @@
+
 {% extends 'steakhouse/base.html' %}
 
 {% block content %}
-<h1 class="mb-4">Order Information</h1>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/orderform.css' %}">
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+<div class="order_form col-lg-8">
+    <form method="post" class="checkout-form">
+        <h2>Order Information</h2>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" id="latitude" name="latitude">
+        <input type="hidden" id="longitude" name="longitude">
+        <button type="submit">Place Order</button>
+    </form>
+</div>
 
-    <button type="submit" class="btn btn-primary">Place Order</button>
-</form>
 {% endblock %}
