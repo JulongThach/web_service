@@ -12,6 +12,7 @@ from .cart import Cart
 
 # Show Product List
 def product_list(request):
+    full_set = Product.objects.filter().all()
     popular = Product.objects.filter(category='Popular')
     mixed = Product.objects.filter(category='Mixed Food')
     steak = Product.objects.filter(category='Steak')
@@ -27,6 +28,7 @@ def product_list(request):
         'spaghetti' : spaghetti,
         'add' : add,
         'steak' : steak,
+        'full_set' : full_set
     }
     return render(request, 'steakhouse/product_list.html', context)
 
