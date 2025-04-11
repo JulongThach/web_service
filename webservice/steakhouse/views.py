@@ -102,7 +102,7 @@ def view_cart(request):
             map_url = f"https://www.google.com/maps?q={order.latitude},{order.longitude}"
             # Send Telegram Message (if set up)
             message = f"🧾 *New Order Received*\n\nReceipt No: {order.receipt_number}\n"
-            message += f"Name: {order.customer_name}\nPhone: {order.phone_number}\nAddress: {order.address}\nLocation: {map_url}\n\n*Order Items:*\n"
+            message += f"Name: {order.customer_name}\nPhone: {order.phone_number}\nAddress: {order.address}\n\n*Order Items:*\n"
             for item in cart_items:
                 message += f"- {item['product'].name} x{item['quantity']} = ${item['price']:.2f}\n"
             message += f"\n*Total Price:* ${total_price:.2f}"
