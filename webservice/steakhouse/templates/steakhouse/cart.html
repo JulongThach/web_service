@@ -1,103 +1,108 @@
 {% extends 'steakhouse/base.html' %}
 
 {% block content %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/cart.css' %}">
-
-<div class="container mx-auto px-4 py-6">
-    <h2 class="text-2xl font-bold text-center text-green-700 mb-6">
-        Your Cart
-    </h2>
+<div class="max-w-6xl mx-auto p-4">
+    <div class="flex flex-col lg:flex-row gap-8">
+  
+      <!-- 🛒 Cart Section -->
+      <div class="lg:w-1/2 w-full">
+        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+          🛒 Your Cart
+        </h2>
     {% if cart_items %}
-    <div class="space-y-4">
         {% for item in cart_items %}
-            <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between align-items-center cart-list" style="gap: 30px;">
-                    <div class="image-container">
-                        <img src="{{ item.product.image.url }}" alt="{{ product.name }}" class="product-img">
-                    </div>
-                    <div style="flex: 1;flex-direction: column; justify-content: center;">
-                        <h6 class="font-semibold text-gray-700">{{ item.product.name }}</h6>
-                        <h6 class="text-sm text-gray-500" style="margin-top: 1rem;">
-                            <form action="{% url 'update_cart' item.product.id %}" method="post" class="quantity-form">
-                            {% csrf_token %}
-                                ${{ item.product.price }} x
-                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" onchange="this.form.submit()" style="width: 28px; text-align: center; border:none; font-weight: bold; color:#0e6251;">
-                            </form>
-                        </h6>
-                    </div>
-                    <div class="text-right">
-                        <h6 class="text-green-600 font-bold text-sm">${{ item.price }}</h6>
-                        <form action="{% url 'remove_from_cart' item.product.id %}" method="post" class="mt-1">
-                            {% csrf_token %}
-                            <button class="text-red-500 text-xs hover:underline btn-remove">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                                </svg>
-                            </button>
-                        </form>
-                    </div>
-                </li>
-            </ul>
+        <div class="bg-white shadow rounded-lg p-4 mb-4 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-16 h-16 rounded object-cover">
+            <div>
+              <h3 class="font-semibold text-lg">{{ item.product.name }}</h3>
+              <div class="flex items-center gap-2">
+                <span>${{ item.product.price }}</span>
+                <span class="text-gray-500">x</span>
+                <form action="{% url 'update_cart' item.product.id %}" method="post">
+                {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" onchange="this.form.submit()"  class="w-16 px-2 py-1 border rounded text-center">
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="font-semibold">${{ item.price }}</div>
+            <form action="{% url 'remove_from_cart' item.product.id %}" method="post" style="margin-top: 10px;">
+                {% csrf_token %}
+                <button class="text-red-600 hover:text-red-800 font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                    <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                    </svg>
+                </button>
+            </form>
+          </div>
+        </div>
         {% endfor %}
-    </div>
-    <div class="mt-6 bg-green-100 border border-green-300 rounded-lg p-4 text-center">
-        <h3 class="text-xl font-bold text-green-700">
-            Total: ${{ total_price }}
-        </h3>
-        <form method="POST" id="clear-cart-form">
+        <div class="text-right mt-4">
+          <p class="text-xl font-bold">Total: ${{ total_price }}</p>
+          <form method="POST" action="{% url 'clear_cart' %}">
             {% csrf_token %}
-            <button type="button" id="clear-cart-btn" class="btn btn-danger">Clear Cart</button>
-        </form>
-        <a href="{% url 'order_form' %}" class="btn btn-success">Proceed to Checkout</a>
-    </div>
+            <button type="submit" style="text-decoration: underline; color: red; font-weight: bold;">Clear Cart</button>
+            </form>
+        </div>
     {% else %}
-    <div class="text-center text-gray-600 mt-20">
-        <p>Your cart is empty.</p>
-        <a href="{% url 'product_list' %}" class="mt-4 inline-block bg-green-600 text-white px-4 py-2 text-sm rounded hover:bg-green-700 transition">
-            Shop Now
-        </a>
-    </div>
+        <div class="text-center text-gray-600 mt-20">
+            <p>Your cart is empty.</p>
+            <a href="{% url 'product_list' %}" class="mt-4 inline-block bg-green-600 text-white px-4 py-2 text-sm rounded hover:bg-green-700 transition">
+                Shop Now
+            </a>
+        </div>
     {% endif %}
 </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <!-- 💳 Checkout Section -->
+      <div class="lg:w-1/2 w-full">
+        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+          💳 Checkout
+        </h2>
+  
+        <form method="post" class="bg-white shadow rounded-lg p-6 space-y-4">
+          {% csrf_token %}
+  
+          <div>
+            <label for="id_customer_name" class="block font-medium">Full Name</label>
+            <input type="text" name="customer_name" id="id_customer_name" required
+                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+          </div>
+  
+          <div>
+            <label for="id_phone_number" class="block font-medium">Telegram/Phone Number</label>
+            <input type="text" name="phone_number" id="id_phone_number" required
+                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Address</label>
+            <textarea name="address" rows="2" required
+                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+          </div>
 
+          <!-- Hidden location fields -->
+          <input type="hidden" name="latitude" id="id_latitude">
+          <input type="hidden" name="longitude" id="id_longitude">
+  
+          <p class="text-sm text-gray-500">Noted: Additional delivery fee may apply</p>
+  
+          <button type="submit"
+            class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 font-semibold transition duration-200">
+            Order Now
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const clearCartBtn = document.getElementById('clear-cart-btn');
-        const cartCountElement = document.getElementById('cart-count');
-
-        clearCartBtn.addEventListener('click', function () {
-            Swal.fire({
-            title: 'Are you sure?',
-            text: "This will remove all items from your cart.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, clear it!'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                fetch("{% url 'clear_cart' %}", {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                      if (cartCountElement) {
-                        cartCountElement.textContent = data.cart_item_count;
-                      }
-                        window.location.href = "{% url 'product_list' %}";  // 👈 update this
-                    }
-                  })
-            }
-            });
-        });
+    // Prompt for location and fill the form
+    navigator.geolocation.getCurrentPosition(function(position) {
+        document.getElementById("id_latitude").value = position.coords.latitude;
+        document.getElementById("id_longitude").value = position.coords.longitude;
+    }, function(error) {
+        alert("Location access denied. Please enable location to continue.");
     });
 </script>
-
 {% endblock %}

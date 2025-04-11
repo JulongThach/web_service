@@ -67,12 +67,12 @@ def remove_from_cart(request, product_id):
 
 # View Cart
 def view_cart(request):
-    cart = request.session.get('cart', {})
+    cart_data = request.session.get('cart', {})
     cart_items = []
     total_price = 0
 
-    for product_id, item in cart.items():
-        product = Product.objects.get(id=product_id)
+    for product_id, item in cart_data.items():
+        product = get_object_or_404(Product, id=product_id)
         quantity = item['quantity']
         price = product.price * quantity
         total_price += price
@@ -81,56 +81,76 @@ def view_cart(request):
             'quantity': quantity,
             'price': price,
         })
-    context = {
-        'cart_items': cart_items,
-        'total_price': total_price,
-    }
-    return render(request, 'steakhouse/cart.html', context)
 
-# Handle Order Form
-def order_form(request):
-    cart = Cart(request)
-    if not cart.cart:
-        return redirect('product_list')  # cart empty
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
-            order = form.save(commit=False)
-            # Generate Receipt Number
-            order.receipt_number = f"REC-{random.randint(100000, 999999)}"
-            order.save()
-            # Save Order Items
-            for product_id, item in cart.cart.items():
-                product = Product.objects.get(id=product_id)
+            order = Order.objects.create(
+                customer_name=form.cleaned_data['customer_name'],
+                phone_number=form.cleaned_data['phone_number'],
+                address=form.cleaned_data['address'],
+                latitude=form.cleaned_data['latitude'],
+                longitude=form.cleaned_data['longitude'],
+            )
+            for item in cart_items:
                 OrderItem.objects.create(
                     order=order,
-                    product=product,
+                    product=item['product'],
                     quantity=item['quantity']
                 )
                 
+            map_url = f"https://www.google.com/maps?q={order.latitude},{order.longitude}"
+            # Send Telegram Message (if set up)
             message = f"🧾 *New Order Received*\n\nReceipt No: {order.receipt_number}\n"
-            message += f"Name: {order.customer_name}\nPhone: {order.phone_number}\nAddress: {order.address}\n\n*Order Items:*\n"
-            
-            print("🛒 Cart data:")
-            for item in cart:
-                message += f"- {item['name']} x{item['quantity']} = ${item['total_price']:.2f}\n"
-
-            message += f"\n*Total Price:* ${cart.get_total_price()}"
+            message += f"Name: {order.customer_name}\nPhone: {order.phone_number}\nAddress: {order.address}\nLocation: {map_url}\n\n*Order Items:*\n"
+            for item in cart_items:
+                message += f"- {item['product'].name} x{item['quantity']} = ${item['price']:.2f}\n"
+            message += f"\n*Total Price:* ${total_price:.2f}"
             send_telegram_message(message)
-            cart.clear()
-            return redirect('product_list')
+
+            # Clear session cart
+            request.session['cart'] = {}
+
+            return redirect('order_success', order_id=order.id)
     else:
         form = OrderForm()
 
-    return render(request, 'steakhouse/order_form.html', {'form': form})
+    context = {
+        'cart_items': cart_items,
+        'total_price': total_price,
+        'form': form,
+    }
+    return render(request, 'steakhouse/cart.html', context)
 
 # Success Page
-def order_success(request):
-    return render(request, 'steakhouse/order_success.html')
+def order_success(request, order_id):
+    order = Order.objects.get(id=order_id)
+    order_items = order.items.all()
+    
+    items_with_totals = []
+    total_order = 0
+
+    for item in order_items:
+        item_total = item.product.price * item.quantity
+        total_order += item_total
+        items_with_totals.append({
+            'name': item.product.name,
+            'quantity': item.quantity,
+            'price': item.product.price,
+            'total': item_total,
+        })
+        
+    context = {
+        'order': order,
+        'order_items': order_items,
+        'order_items': items_with_totals,
+        'total_order': total_order,
+    }
+    return render(request, 'steakhouse/order_success.html', context)
 
 #Clear Cart
 @require_POST
 def clear_cart(request):
     request.session['cart'] = {} 
     request.session.modified = True
-    return JsonResponse({'success': True, 'cart_item_count': 0})
+    return redirect('view_cart')

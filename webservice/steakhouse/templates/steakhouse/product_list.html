@@ -1,316 +1,141 @@
 {% extends 'steakhouse/base.html' %}
-{% load static %}
 
 {% block content %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/product_list.css' %}">
 <!-- AOS Animation Library -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <!-- Products Start -->
-    <section class="py-5" style="margin-top: -5rem;">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="bootstrap-tabs product-tabs">
-                <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-popular">Popular</a>
-                    </div>
-                  </nav>
-                </div>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-popular" role="tabpanel" aria-labelledby="nav-all-tab">
-                        <div class="product-grid">
-                            {% for product in popular %}
-                            <div class="product-card">
-                              <div class="product-info">
-                                <h3>{{ product.name }}</h3>
-                                <p>{{ product.decription }}</p>
-                                <span>${{ product.price }}</span>
-                                <p>{{ product.description|truncatechars:60 }}</p>
-                              </div>
-                              <div class="image-container">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
-                                <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
-                                {% csrf_token %}
-                                  <button type="submit" class="add-btn">+</button>
-                                </form>
-                              </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    <!-- / product-grid -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
+<div class="px-4 py-6 max-w-6xl mx-auto">
+  <!-- Category Dropdown -->
+  <div class="mb-6 flex justify-start">
+    <select onchange="showCategory(this.value)" class="px-4 py-2 border rounded-md shadow focus:outline-none focus:ring-2 focus:ring-green-500">
+      <option value="popular">🍽️ Popular</option>
+      <option value="mixed"> 🥘 Mixed Food</option>
+      <option value="steak">🥩 Steak</option>
+      <option value="suit">🍲 Suit</option>
+      <option value="spaghetti">🍝 Spaghetti</option>
+      <option value="add">🍲 Additional</option>
+      <option value="drink">🍲 Drink</option>
+    </select>
+  </div>
+  <!-- Pupular -->
+  <div id="category-popular" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Card 1 -->
+      {% for product in popular %}
+      <div class="bg-white rounded-lg shadow-lg p-4">
+        <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+        <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+        <p class="text-gray-600 mb-2">{{ product.decription }}</p>
+        <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
+        <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
+          {% csrf_token %}
+          <button class="bg-green-700 text-white py-2 px-4 rounded-full w-full">Add to Order</button>
+        </form>
+      </div>
+      {% endfor %}
+  </div>
+  <!-- Mixed Food -->
+  <div id="category-mixed" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for product in mixed %}
+    <div class="bg-white rounded-lg shadow-lg p-4">
+      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+      <p class="text-gray-600 mb-2">{{ product.decription }}</p>
+      <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
+      <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
+        {% csrf_token %}
+        <button class="bg-green-700 text-white py-2 px-4 rounded-full w-full">Add to Order</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- Steak -->
+  <div id="category-steak" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for product in steak %}
+    <div class="bg-white rounded-lg shadow-lg p-4">
+      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+      <p class="text-gray-600 mb-2">{{ product.decription }}</p>
+      <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
+      <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
+        {% csrf_token %}
+        <button class="bg-green-700 text-white py-2 px-4 rounded-full w-full">Add to Order</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- Suit -->
+  <div id="category-suit" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for product in suit %}
+    <div class="bg-white rounded-lg shadow-lg p-4">
+      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+      <p class="text-gray-600 mb-2">{{ product.decription }}</p>
+      <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
+      <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
+        {% csrf_token %}
+        <button class="bg-green-700 text-white py-2 px-4 rounded-full w-full">Add to Order</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
 
-    <!-- Mixed Food -->
-    <section class="py-5" style="margin-top: -5rem;">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="bootstrap-tabs product-tabs">
-                <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-mixed">Mixed Food</a>
-                    </div>
-                  </nav>
-                </div>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-mixed" role="tabpanel" aria-labelledby="nav-all-tab">
-                        <div class="product-grid">
-                            {% for product in mixed %}
-                            <div class="product-card">
-                              <div class="product-info">
-                                <h3>{{ product.name }}</h3>
-                                <p>{{ product.decription }}</p>
-                                <span>${{ product.price }}</span>
-                                <p>{{ product.description|truncatechars:60 }}</p>
-                              </div>
-                              <div class="image-container">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
-                                <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
-                                {% csrf_token %}
-                                  <button type="submit" class="add-btn">+</button>
-                                </form>
-                              </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    <!-- / product-grid -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
-
-    <!-- Steak -->
-    <section class="py-5" style="margin-top: -5rem;">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="bootstrap-tabs product-tabs">
-                <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-steak">Steak</a>
-                    </div>
-                  </nav>
-                </div>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-steak" role="tabpanel" aria-labelledby="nav-all-tab">
-                        <div class="product-grid">
-                            {% for product in steak %}
-                            <div class="product-card">
-                              <div class="product-info">
-                                <h3>{{ product.name }}</h3>
-                                <p>{{ product.decription }}</p>
-                                <span>${{ product.price }}</span>
-                                <p>{{ product.description|truncatechars:60 }}</p>
-                              </div>
-                              <div class="image-container">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
-                                <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
-                                {% csrf_token %}
-                                  <button type="submit" class="add-btn">+</button>
-                                </form>
-                              </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    <!-- / product-grid -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
-
-    <!-- Suit -->
-    <section class="py-5" style="margin-top: -5rem;">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="bootstrap-tabs product-tabs">
-                <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-suit">Suit</a>
-                    </div>
-                  </nav>
-                </div>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-steak" role="tabpanel" aria-labelledby="nav-all-tab">
-                        <div class="product-grid">
-                            {% for product in suit %}
-                            <div class="product-card">
-                              <div class="product-info">
-                                <h3>{{ product.name }}</h3>
-                                <p>{{ product.decription }}</p>
-                                <span>${{ product.price }}</span>
-                                <p>{{ product.description|truncatechars:60 }}</p>
-                              </div>
-                              <div class="image-container">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
-                                <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
-                                {% csrf_token %}
-                                  <button type="submit" class="add-btn">+</button>
-                                </form>
-                              </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    <!-- / product-grid -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
-
-    <!-- Spaghetti -->
-    <section class="py-5" style="margin-top: -5rem;">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="bootstrap-tabs product-tabs">
-                <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-spaghetti">Spaghetti</a>
-                    </div>
-                  </nav>
-                </div>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-spaghetti" role="tabpanel" aria-labelledby="nav-all-tab">
-                        <div class="product-grid">
-                            {% for product in spaghetti %}
-                            <div class="product-card">
-                              <div class="product-info">
-                                <h3>{{ product.name }}</h3>
-                                <p>{{ product.decription }}</p>
-                                <span>${{ product.price }}</span>
-                                <p>{{ product.description|truncatechars:60 }}</p>
-                              </div>
-                              <div class="image-container">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
-                                <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
-                                {% csrf_token %}
-                                  <button type="submit" class="add-btn">+</button>
-                                </form>
-                              </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    <!-- / product-grid -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
-
-    <!-- Add -->
-    <section class="py-5" style="margin-top: -5rem;">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="bootstrap-tabs product-tabs">
-                <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-add">Add</a>
-                    </div>
-                  </nav>
-                </div>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-add" role="tabpanel" aria-labelledby="nav-all-tab">
-                        <div class="product-grid">
-                            {% for product in add %}
-                            <div class="product-card">
-                              <div class="product-info">
-                                <h3>{{ product.name }}</h3>
-                                <p>{{ product.decription }}</p>
-                                <span>${{ product.price }}</span>
-                                <p>{{ product.description|truncatechars:60 }}</p>
-                              </div>
-                              <div class="image-container">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
-                                <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
-                                {% csrf_token %}
-                                  <button type="submit" class="add-btn">+</button>
-                                </form>
-                              </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    <!-- / product-grid -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
-
-    <!-- Drink -->
-    <section class="py-5" style="margin-top: -5rem;">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="bootstrap-tabs product-tabs">
-                <div class="tabs-header d-flex justify-content-between border-bottom my-5">
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a href="#" class="nav-link text-uppercase fs-6 active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-drink">Drink</a>
-                    </div>
-                  </nav>
-                </div>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-drink" role="tabpanel" aria-labelledby="nav-all-tab">
-                        <div class="product-grid">
-                            {% for product in drink %}
-                            <div class="product-card">
-                              <div class="product-info">
-                                <h3>{{ product.name }}</h3>
-                                <p>{{ product.decription }}</p>
-                                <span>${{ product.price }}</span>
-                                <p>{{ product.description|truncatechars:60 }}</p>
-                              </div>
-                              <div class="image-container">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
-                                <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
-                                {% csrf_token %}
-                                  <button type="submit" class="add-btn">+</button>
-                                </form>
-                              </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    <!-- / product-grid -->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
-
+  <!-- Spaghetti -->
+  <div id="category-spaghetti" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for product in spaghetti %}
+    <div class="bg-white rounded-lg shadow-lg p-4">
+      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+      <p class="text-gray-600 mb-2">{{ product.decription }}</p>
+      <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
+      <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
+        {% csrf_token %}
+        <button class="bg-green-700 text-white py-2 px-4 rounded-full w-full">Add to Order</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- Additional -->
+  <div id="category-add" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for product in add %}
+    <div class="bg-white rounded-lg shadow-lg p-4">
+      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+      <p class="text-gray-600 mb-2">{{ product.decription }}</p>
+      <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
+      <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
+        {% csrf_token %}
+        <button class="bg-green-700 text-white py-2 px-4 rounded-full w-full">Add to Order</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  <!-- Drink -->
+  <div id="category-drink" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for product in drink %}
+    <div class="bg-white rounded-lg shadow-lg p-4">
+      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
+      <p class="text-gray-600 mb-2">{{ product.decription }}</p>
+      <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
+      <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-auto add-to-cart-form">
+        {% csrf_token %}
+        <button class="bg-green-700 text-white py-2 px-4 rounded-full w-full">Add to Order</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 <!-- AOS + SweetAlert + Cart JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  function showCategory(category) {
+    document.querySelectorAll('[id^="category-"]').forEach(el => el.classList.add('hidden'));
+    document.getElementById(`category-${category}`).classList.remove('hidden');
+  }
+</script>
 <script>
     AOS.init();
     const forms = document.querySelectorAll('.add-to-cart-form');
@@ -322,6 +147,7 @@
                 method: 'POST',
                 body: new FormData(this)
             })
+
             .then(response => {
                 if (response.ok) {
                     Swal.fire({
