@@ -1,15 +1,15 @@
 {% extends 'steakhouse/base.html' %}
 
 {% block content %}
+{% if cart_items %}
 <div class="max-w-6xl mx-auto p-4">
     <div class="flex flex-col lg:flex-row gap-8">
-  
-      <!-- 🛒 Cart Section -->
-      <div class="lg:w-1/2 w-full">
-        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          🛒 Your Cart
-        </h2>
-    {% if cart_items %}
+        <!-- 🛒 Cart Section -->
+        <div class="lg:w-1/2 w-full">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+            🛒 Your Cart
+            </h2>
+    
         {% for item in cart_items %}
         <div class="bg-white shadow rounded-lg p-4 mb-4 flex items-center justify-between">
           <div class="flex items-center gap-4">
@@ -46,63 +46,107 @@
             <button type="submit" style="text-decoration: underline; color: red; font-weight: bold;">Clear Cart</button>
             </form>
         </div>
-    {% else %}
-        <div class="text-center text-gray-600 mt-20">
-            <p>Your cart is empty.</p>
-            <a href="{% url 'product_list' %}" class="mt-4 inline-block bg-green-600 text-white px-4 py-2 text-sm rounded hover:bg-green-700 transition">
-                Shop Now
-            </a>
-        </div>
-    {% endif %}
-</div>
-      <!-- 💳 Checkout Section -->
-      <div class="lg:w-1/2 w-full">
+    </div>
+        <div class="lg:w-1/2 w-full">
         <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          💳 Checkout
-        </h2>
+            💳 Checkout
+          </h2>
+          <form method="post" class="bg-white shadow rounded-lg p-6 space-y-4">
+            {% csrf_token %}
+            <div>
+              <label for="id_customer_name" class="block font-medium">Full Name</label>
+              <input type="text" name="customer_name" id="id_customer_name" required
+                  class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+            </div>
+    
+            <div>
+              <label for="id_phone_number" class="block font-medium">Telegram/Phone Number</label>
+              <input type="text" name="phone_number" id="id_phone_number" required
+                  class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium">Address</label>
+              <textarea name="address" rows="2"
+                  class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+            </div>
   
-        <form method="post" class="bg-white shadow rounded-lg p-6 space-y-4">
-          {% csrf_token %}
-  
-          <div>
-            <label for="id_customer_name" class="block font-medium">Full Name</label>
-            <input type="text" name="customer_name" id="id_customer_name" required
-                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
-          </div>
-  
-          <div>
-            <label for="id_phone_number" class="block font-medium">Telegram/Phone Number</label>
-            <input type="text" name="phone_number" id="id_phone_number" required
-                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium">Address</label>
-            <textarea name="address" rows="2" required
-                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
-          </div>
+            <!-- Hidden location fields -->
+            <input type="hidden" name="latitude" id="id_latitude">
+            <input type="hidden" name="longitude" id="id_longitude">
+            <!-- Share Location Toggle -->
+            <div class="flex items-center space-x-2 mt-4">
+                    <label for="share-location" class="text-sm text-gray-700">Share Live Location</label>
+                    <label for="share-location-toggle" class="flex items-center cursor-pointer">
+                        <div class="relative">
+                            <div class="w-10 h-5 bg-gray-300 rounded-full"></div>
+                            <div class="absolute top-0 left-0 w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300" id="toggle"></div>
+                        </div>
+                        <input type="checkbox" id="share-location-toggle" name="share_location" class="hidden">
+                    </label>
+            </div>
+            <p class="text-sm text-gray-500">Noted: Additional delivery fee may apply</p>
+            <button type="submit"
+              class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 font-semibold transition duration-200">
+              Order Now
+            </button>
+          </form>
+        </div>
+    </div>    
+</div>
 
-          <!-- Hidden location fields -->
-          <input type="hidden" name="latitude" id="id_latitude">
-          <input type="hidden" name="longitude" id="id_longitude">
-  
-          <p class="text-sm text-gray-500">Noted: Additional delivery fee may apply</p>
-  
-          <button type="submit"
-            class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 font-semibold transition duration-200">
-            Order Now
-          </button>
-        </form>
-      </div>
+{% else %}
+<div class="w-full flex justify-center" style="margin-top: 10rem;">
+    <div class="text-center">
+      <h1 class="text-2xl font-bold mb-4 flex items-center justify-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.293 1.293a1 1 0 001.414 1.414L9 15h6l1.293 1.293a1 1 0 001.414-1.414L17 13M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
+        </svg>
+        Your Cart
+      </h1>
+      <p class="mb-4 text-gray-600">
+        Your cart is empty.
+      </p>
+      <a href="{% url 'product_list' %}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+        Shop Now
+      </a>
     </div>
   </div>
-  
+{% endif %}
 <script>
-    // Prompt for location and fill the form
-    navigator.geolocation.getCurrentPosition(function(position) {
-        document.getElementById("id_latitude").value = position.coords.latitude;
-        document.getElementById("id_longitude").value = position.coords.longitude;
-    }, function(error) {
-        alert("Location access denied. Please enable location to continue.");
+    const toggle = document.getElementById("share-location-toggle");
+
+    const slider = toggle.previousElementSibling.querySelector("div:last-child");
+
+    toggle.addEventListener("change", () => {
+        if (toggle.checked) {
+            // Animate the toggle slider
+            slider.style.transform = "translateX(20px)";
+
+            slider.classList.remove("bg-white-300");
+            slider.classList.add("bg-green-800");
+
+            // Get location when toggle is turned on
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.getElementById('id_latitude').value = position.coords.latitude;
+                    document.getElementById('id_longitude').value = position.coords.longitude;
+                }, function(error) {
+                    console.error("Error getting location:", error);
+                });
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+        } else {
+            // Animate the toggle slider back
+            slider.style.transform = "translateX(0)";
+
+            slider.classList.remove("bg-green-800");
+            slider.classList.add("bg-white-300");
+
+            // Optionally clear the location fields
+            document.getElementById('id_latitude').value = "";
+            document.getElementById('id_longitude').value = "";
+        }
     });
 </script>
 {% endblock %}
