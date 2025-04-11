@@ -88,9 +88,7 @@ def view_cart(request):
             order = Order.objects.create(
                 customer_name=form.cleaned_data['customer_name'],
                 phone_number=form.cleaned_data['phone_number'],
-                address=form.cleaned_data['address'],
-                latitude=form.cleaned_data['latitude'],
-                longitude=form.cleaned_data['longitude'],
+                address=form.cleaned_data['address']
             )
             for item in cart_items:
                 OrderItem.objects.create(
