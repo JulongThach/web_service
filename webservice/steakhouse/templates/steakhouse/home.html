@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OXLY Steakhouse</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% load static %}
+  <link rel="icon" type="image/x-icon" href="{% static 'images/favico.png' %}">
+</head>
+
+<body class="bg-white text-gray-800">
+
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <div class="container mx-auto flex items-center justify-between py-4 px-4">
+      <!-- Logo -->
+      <div class="flex items-center"><a href="{% url 'home' %}">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="h-10 w-auto"> </a>
+      </div>
+  
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex space-x-8 text-gray-700 font-medium">
+        <a href="{% url 'home' %}" class="hover:text-red-600 transition">HOME</a>
+        <a href="{% url 'product_list' %}" class="hover:text-red-600 transition">MENU</a>
+        <a href="#" class="hover:text-red-600 transition">GALLERY</a>
+        <a href="#" class="hover:text-red-600 transition">CONTACT</a>
+      </nav>
+  
+      <!-- Mobile Menu Button -->
+      <button id="menu-btn" class="md:hidden text-3xl text-gray-700">
+        ☰
+      </button>
+    </div>
+  
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white px-4 py-4">
+      <nav class="flex flex-col space-y-4 text-gray-700 font-medium">
+        <a href="{% url 'home' %}" class="hover:text-red-600 transition">Home</a>
+        <a href="{% url 'product_list' %}" class="hover:text-red-600 transition">Menu</a>
+        <a href="#" class="hover:text-red-600 transition">Gallery</a>
+        <a href="#" class="hover:text-red-600 transition">Contact</a>
+      </nav>
+    </div>
+  </header>
+  
+
+<!-- Hero -->
+<section id="home" class="pt-20 relative h-[90vh] flex items-center justify-center bg-cover bg-center" style="background-image: url('{% static 'images/5.jpg' %}');">
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+  <div class="text-center text-white relative z-10">
+    <h2 class="text-4xl md:text-6xl font-bold mb-4 animate-fadeInDown">Experience Real Taste</h2>
+    <p class="mb-6 animate-fadeInUp">Fresh ingredients. Authentic recipes. Cozy vibes.</p>
+    <a href="{% url 'product_list' %}" class="bg-red-600 hover:bg-red-700 text-white py-3 px-6 rounded-full font-bold transition">Explore Menu</a>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-16 px-4 md:px-20">
+  <div class="md:flex items-center gap-10">
+    <img src="{% static 'images/8.jpg' %}" class="w-full md:w-1/2 rounded-lg shadow-lg animate-fade-left" alt="About OXLY">
+    <div class="mt-6 md:mt-0 md:w-1/2 animate-fade-right">
+      <h2 class="text-3xl font-bold mb-4">Welcome to OXLY Steakhouse</h2>
+      <p class="mb-4">Welcome to Oxly Steakhouse, Phnom Penh’s hidden gem for steak lovers and families alike. At Oxly, we pride ourselves on offering a dining experience that combines delicious meals, a warm ambiance, and exceptional value for money.</p>
+      <p class="mb-4">Our dishes are thoughtfully crafted with generous portions that evoke the comforting feeling of home-cooked meals. Whether you’re savoring our perfectly grilled steaks or indulging in hearty sides, every bite reflects our commitment to quality and care.</p>
+      <p class="mb-4">Set in a charming and relaxed atmosphere, Oxly Steakhouse is the perfect spot for family gatherings, casual dinners, or special celebrations. We believe great food should be accessible to all, and our menu ensures you enjoy premium flavors without stretching your budget.</p>
+      <p class="mb-4">Join us at Oxly Steakhouse, where every meal feels like it’s made with love—because it truly is.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Menu Section -->
+<section id="menu" class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4 text-center mb-12">
+    <h3 class="text-3xl font-bold mb-2">Our Specials</h3>
+    <p class="text-gray-600">Hand-picked dishes loved by our customers</p>
+  </div>
+  <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 px-4 max-w-6xl mx-auto">
+    <!-- Card -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition">
+      <img src="{% static 'images/7.jpg' %}" class="w-full h-48 object-cover" alt="Pizza">
+      <div class="p-4">
+        <h4 class="font-semibold text-xl">Beef Set</h4>
+        <p class="text-gray-600 mt-2">Grilled beef steak fillet green pepper.</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition">
+      <img src="{% static 'images/10.jpg' %}" class="w-full h-48 object-cover" alt="Pasta">
+      <div class="p-4">
+        <h4 class="font-semibold text-xl">Lamb Set</h4>
+        <p class="text-gray-600 mt-2">Has a strong earthy and somewhat gamey flavor.</p>
+      </div>
+    </div>
+    <div class="bg-white rounded-xl shadow-md overflow-hidden hover:scale-105 transition">
+      <img src="{% static 'images/9.jpg' %}" class="w-full h-48 object-cover" alt="Burger">
+      <div class="p-4">
+        <h4 class="font-semibold text-xl">Chicken Set</h4>
+        <p class="text-gray-600 mt-2">Good food for the fitness and gym.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Facilities Section -->
+<section id="facilities" class="py-16 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 text-center mb-12">
+      <h3 class="text-3xl font-bold mb-2">Our Facilities</h3>
+      <p class="text-gray-600">Explore the cozy atmosphere and modern facilities we provide</p>
+    </div>
+    <!-- Gallery Grid -->
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 px-4">
+      <!-- Gallery Item 1 -->
+      <div class="overflow-hidden rounded-xl shadow-lg group cursor-pointer" onclick="openModal('modal1')">
+        <img src="{% static 'images/2.jpg' %}" class="w-full h-60 object-cover transform group-hover:scale-110 transition duration-500" alt="Interior">
+        <div class="p-4">
+          <h4 class="text-xl font-semibold">Modern Interior</h4>
+          <p class="text-gray-600 mt-2">Elegant dining area with premium furniture.</p>
+        </div>
+      </div>
+      <!-- Gallery Item 2 -->
+      <div class="overflow-hidden rounded-xl shadow-lg group cursor-pointer" onclick="openModal('modal2')">
+        <img src="{% static 'images/6.jpg' %}" class="w-full h-60 object-cover transform group-hover:scale-110 transition duration-500" alt="Bar Area">
+        <div class="p-4">
+          <h4 class="text-xl font-semibold">Exclusive Bar</h4>
+          <p class="text-gray-600 mt-2">Enjoy exotic drinks at our cozy bar corner.</p>
+        </div>
+      </div>
+      <!-- Gallery Item 3 -->
+      <div class="overflow-hidden rounded-xl shadow-lg group cursor-pointer" onclick="openModal('modal3')">
+        <img src="{% static 'images/3.jpg' %}" class="w-full h-60 object-cover transform group-hover:scale-110 transition duration-500" alt="Outdoor Dining">
+        <div class="p-4">
+          <h4 class="text-xl font-semibold">Outdoor Seating</h4>
+          <p class="text-gray-600 mt-2">Fresh air dining experience with a view.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Footer -->
+<footer class="text-black py-4 text-center">
+  <p>&copy; 2025 Khwebsite. All rights reserved.</p>
+</footer>
+
+<!-- Animations -->
+<style>
+  @keyframes fadeInDown {
+    from {opacity: 0; transform: translateY(-20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  @keyframes fadeInUp {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  .animate-fadeInDown {
+    animation: fadeInDown 1s ease-out forwards;
+  }
+  .animate-fadeInUp {
+    animation: fadeInUp 1s ease-out forwards;
+  }
+</style>
+<!-- Modal JavaScript -->
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>
+</body>
+</html>

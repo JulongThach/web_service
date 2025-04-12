@@ -10,6 +10,10 @@ import random
 
 from .cart import Cart
 
+#Homepage
+def home(request):
+    return render(request, 'steakhouse/home.html')
+
 # Show Product List
 def product_list(request):
     full_set = Product.objects.filter().all()
