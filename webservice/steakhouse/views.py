@@ -1,18 +1,44 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Order, OrderItem
-from .forms import OrderForm, OrderItemFormSet
+from .forms import OrderForm, OrderItemFormSet, MessageForm
 from .utils import send_telegram_message  # We'll create this later
 from django.forms import modelformset_factory
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
-
+from django.contrib import messages
+import requests
 import random
 
 from .cart import Cart
 
+
+# Replace with your Telegram Bot Token and Chat ID
+BOT_TOKEN = "7808231868:AAHNf2dvyAm697DyB2wfLlrUS-PpniK29YI"
+CHAT_ID = "-4770597616"
+
+def send_telegram_message(name, phone, subject, message):
+    text = f"📩 *New Message Received*\n\n👤 Name: {name}\n📱 Phone Number: {phone}\n📕 Subject: {subject}\n💬 Message: {message}"
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+    payload = {"chat_id": CHAT_ID, "text": text, "parse_mode": "Markdown"}
+    requests.post(url, json=payload)
+
 #Homepage
 def home(request):
-    return render(request, 'steakhouse/home.html')
+    return render(request, 'homepage/home.html')
+
+def send_message(request):
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data["name"]
+            phone = form.cleaned_data["phone"]
+            subject = form.cleaned_data["subject"]
+            message = form.cleaned_data["message"]
+            send_telegram_message(name, phone, subject, message)
+            return redirect('home') # Redirect after successful submission
+    else:
+        form = MessageForm()
+    return render(request, "homepage/home.html", {"form": form})
 
 # Show Product List
 def product_list(request):

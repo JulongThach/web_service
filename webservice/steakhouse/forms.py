@@ -14,3 +14,9 @@ OrderItemFormSet = forms.inlineformset_factory(
     extra=1,
     can_delete=True
 )
+
+class MessageForm(forms.Form):
+    name = forms.CharField(widget=forms.TextInput, label="Name")
+    phone = forms.CharField(widget=forms.TextInput, label="Phone Number")
+    subject = forms.CharField(widget=forms.TextInput, label="Subject")
+    message = forms.CharField(widget=forms.Textarea, label="Your Message")
