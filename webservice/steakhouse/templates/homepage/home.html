@@ -39,9 +39,9 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="#hero" class="active">Home<br></a></li>
+          <li><a href="{% url 'home' %}" class="active">Home<br></a></li>
           <li><a href="{% url 'product_list' %}">Menu</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="{% url 'send_message' %}">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -59,7 +59,7 @@
             <h1 data-aos="fade-up">Experiencing<br>Real Taste</h1>
             <p data-aos="fade-up" data-aos-delay="100">Fresh ingredients. Authentic recipes. Cozy vibes.</p>
             <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <a href="{% url 'product_list' %}" class="btn-get-started">Order Now</a>
+              <a href="{% url 'product_list' %}" class="btn-get-started" style="background-color: #047857;">Order Now</a>
             </div>
           </div>
           <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
@@ -159,100 +159,6 @@
       </div>
 
     </section><!-- /Gallery Section -->
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <p><span>Need Help?</span> <span class="description-title">Contact Us</span></p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="mb-5">
-          <iframe style="width: 100%; height: 400px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3908.6553169542226!2d104.8980291!3d11.5765488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310951c760c18ebf%3A0x3cbc3816a9c21681!2sOxly%20Steakhouse!5e0!3m2!1skm!2skh!4v1744457954345!5m2!1skm!2skh" frameborder="0" allowfullscreen=""></iframe>
-        </div><!-- End Google Maps -->
-
-        <div class="row gy-4">
-
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="200">
-              <i class="icon bi bi-geo-alt flex-shrink-0"></i>
-              <div>
-                <h3>Address</h3>
-                <p>No. 05, St. 578, Tuol Kork, Phnom Penh, Cambodia</p>
-              </div>
-            </div>
-          </div><!-- End Info Item -->
-
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="300">
-              <i class="icon bi bi-telephone flex-shrink-0"></i>
-              <div>
-                <h3>Call Us</h3>
-                <p>+855 97 705 0092</p>
-              </div>
-            </div>
-          </div><!-- End Info Item -->
-
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="400">
-              <i class="icon bi bi-envelope flex-shrink-0"></i>
-              <div>
-                <h3>Email Us</h3>
-                <p>oxly_steakhouse@gmail.com</p>
-              </div>
-            </div>
-          </div><!-- End Info Item -->
-
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center" data-aos="fade-up" data-aos-delay="500">
-              <i class="icon bi bi-clock flex-shrink-0"></i>
-              <div>
-                <h3>Opening Hours<br></h3>
-                <p><strong>Mon-Sat:</strong> 8AM - 7PM; <strong>Sunday:</strong> Closed</p>
-              </div>
-            </div>
-          </div><!-- End Info Item -->
-
-        </div>
-
-        <form action="{% url 'send_message' %}" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="600">
-          {% csrf_token %}
-          <div class="row gy-4">
-
-            <div class="col-md-6">
-              <input type="text" name="name" class="form-control" value="{{ request.POST.name }}" placeholder="Your Name" required="">
-            </div>
-
-            <div class="col-md-6 ">
-              <input type="text" class="form-control" name="phone" value="{{ request.POST.phone }}" placeholder="Your Phone Number" required="">
-            </div>
-
-            <div class="col-md-12">
-              <input type="text" class="form-control" name="subject" value="{{ request.POST.subject }}" placeholder="Subject" required="">
-            </div>
-
-            <div class="col-md-12">
-              <textarea class="form-control" name="message" rows="6" value="{{ request.POST.message }}" placeholder="Message" required=""></textarea>
-            </div>
-
-            <div class="col-md-12 text-center">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-
-              <button type="submit">Send Message</button>
-            </div>
-
-          </div>
-        </form><!-- End Contact Form -->
-
-      </div>
-
-    </section><!-- /Contact Section -->
 
   </main>
 

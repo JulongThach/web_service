@@ -41,7 +41,7 @@
         {% endfor %}
         <div class="text-right mt-4">
           <p class="text-xl font-bold">Total: ${{ total_price }}</p>
-          <form method="POST" action="{% url 'clear_cart' %}">
+          <form action="{% url 'clear_cart' %}" method="post">
             {% csrf_token %}
             <button type="submit" style="text-decoration: underline; color: red; font-weight: bold;">Clear Cart</button>
             </form>
@@ -159,4 +159,5 @@
         document.getElementById('id_longitude').value = position.coords.longitude;
     });
 </script>-->
+
 {% endblock %}

@@ -25,7 +25,18 @@
     <!-- Card 1 -->
       {% for product in full_set %}
       <div class="bg-white rounded-lg shadow-lg p-4">
-        <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+        <div x-data="{ open: false }">
+          <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4" @click="open = true">
+          <!-- Image (Click to Open Full) -->
+          <div x-show="open" x-transition class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+            <div @click.away="open = false" class="max-w-full max-h-full">
+              <img src="{{ product.image.url }} " alt="Full view" class="max-h-screen rounded-lg shadow-lg" />
+            </div>
+            <!-- Close Button -->
+            <button @click="open = false" class="absolute top-4 right-4 text-white text-3xl font-bold"> &times;
+            </button>
+          </div>
+        </div>
         <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
         <p class="text-gray-600 mb-2">{{ product.decription }}</p>
         <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
@@ -35,13 +46,24 @@
         </form>
       </div>
       {% endfor %}
-  </div>
+  </div>  
   <!-- Pupular -->
   <div id="category-popular" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <!-- Card 1 -->
       {% for product in popular %}
       <div class="bg-white rounded-lg shadow-lg p-4">
-        <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+        <div x-data="{ open: false }">
+          <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4" @click="open = true">
+          <!-- Image (Click to Open Full) -->
+          <div x-show="open" x-transition class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+            <div @click.away="open = false" class="max-w-full max-h-full">
+              <img src="{{ product.image.url }} " alt="Full view" class="max-h-screen rounded-lg shadow-lg" />
+            </div>
+            <!-- Close Button -->
+            <button @click="open = false" class="absolute top-4 right-4 text-white text-3xl font-bold"> &times;
+            </button>
+          </div>
+        </div>
         <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
         <p class="text-gray-600 mb-2">{{ product.decription }}</p>
         <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
@@ -56,7 +78,18 @@
   <div id="category-mixed" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for product in mixed %}
     <div class="bg-white rounded-lg shadow-lg p-4">
-      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <div x-data="{ open: false }">
+        <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4" @click="open = true">
+        <!-- Image (Click to Open Full) -->
+        <div x-show="open" x-transition class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div @click.away="open = false" class="max-w-full max-h-full">
+            <img src="{{ product.image.url }} " alt="Full view" class="max-h-screen rounded-lg shadow-lg" />
+          </div>
+          <!-- Close Button -->
+          <button @click="open = false" class="absolute top-4 right-4 text-white text-3xl font-bold"> &times;
+          </button>
+        </div>
+      </div>
       <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
       <p class="text-gray-600 mb-2">{{ product.decription }}</p>
       <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
@@ -71,7 +104,18 @@
   <div id="category-steak" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for product in steak %}
     <div class="bg-white rounded-lg shadow-lg p-4">
-      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <div x-data="{ open: false }">
+        <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4" @click="open = true">
+        <!-- Image (Click to Open Full) -->
+        <div x-show="open" x-transition class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div @click.away="open = false" class="max-w-full max-h-full">
+            <img src="{{ product.image.url }} " alt="Full view" class="max-h-screen rounded-lg shadow-lg" />
+          </div>
+          <!-- Close Button -->
+          <button @click="open = false" class="absolute top-4 right-4 text-white text-3xl font-bold"> &times;
+          </button>
+        </div>
+      </div>
       <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
       <p class="text-gray-600 mb-2">{{ product.decription }}</p>
       <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
@@ -86,7 +130,18 @@
   <div id="category-suit" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for product in suit %}
     <div class="bg-white rounded-lg shadow-lg p-4">
-      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <div x-data="{ open: false }">
+        <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4" @click="open = true">
+        <!-- Image (Click to Open Full) -->
+        <div x-show="open" x-transition class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div @click.away="open = false" class="max-w-full max-h-full">
+            <img src="{{ product.image.url }} " alt="Full view" class="max-h-screen rounded-lg shadow-lg" />
+          </div>
+          <!-- Close Button -->
+          <button @click="open = false" class="absolute top-4 right-4 text-white text-3xl font-bold"> &times;
+          </button>
+        </div>
+      </div>
       <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
       <p class="text-gray-600 mb-2">{{ product.decription }}</p>
       <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
@@ -102,7 +157,18 @@
   <div id="category-spaghetti" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for product in spaghetti %}
     <div class="bg-white rounded-lg shadow-lg p-4">
-      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <div x-data="{ open: false }">
+        <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4" @click="open = true">
+        <!-- Image (Click to Open Full) -->
+        <div x-show="open" x-transition class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div @click.away="open = false" class="max-w-full max-h-full">
+            <img src="{{ product.image.url }} " alt="Full view" class="max-h-screen rounded-lg shadow-lg" />
+          </div>
+          <!-- Close Button -->
+          <button @click="open = false" class="absolute top-4 right-4 text-white text-3xl font-bold"> &times;
+          </button>
+        </div>
+      </div>
       <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
       <p class="text-gray-600 mb-2">{{ product.decription }}</p>
       <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
@@ -117,7 +183,18 @@
   <div id="category-add" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for product in add %}
     <div class="bg-white rounded-lg shadow-lg p-4">
-      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <div x-data="{ open: false }">
+        <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4" @click="open = true">
+        <!-- Image (Click to Open Full) -->
+        <div x-show="open" x-transition class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div @click.away="open = false" class="max-w-full max-h-full">
+            <img src="{{ product.image.url }} " alt="Full view" class="max-h-screen rounded-lg shadow-lg" />
+          </div>
+          <!-- Close Button -->
+          <button @click="open = false" class="absolute top-4 right-4 text-white text-3xl font-bold"> &times;
+          </button>
+        </div>
+      </div>
       <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
       <p class="text-gray-600 mb-2">{{ product.decription }}</p>
       <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
@@ -132,7 +209,18 @@
   <div id="category-drink" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for product in drink %}
     <div class="bg-white rounded-lg shadow-lg p-4">
-      <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4">
+      <div x-data="{ open: false }">
+        <img src="{{ product.image.url }}" alt="Dish 1" class="w-full h-48 object-cover rounded-lg mb-4" @click="open = true">
+        <!-- Image (Click to Open Full) -->
+        <div x-show="open" x-transition class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div @click.away="open = false" class="max-w-full max-h-full">
+            <img src="{{ product.image.url }} " alt="Full view" class="max-h-screen rounded-lg shadow-lg" />
+          </div>
+          <!-- Close Button -->
+          <button @click="open = false" class="absolute top-4 right-4 text-white text-3xl font-bold"> &times;
+          </button>
+        </div>
+      </div>
       <h3 class="text-xl font-semibold mb-2">{{ product.name }}</h3>
       <p class="text-gray-600 mb-2">{{ product.decription }}</p>
       <p class="text-green-500 font-semibold mb-4">${{ product.price }}</p>
@@ -142,11 +230,12 @@
       </form>
     </div>
     {% endfor %}
-  </div>
+  </div> 
 </div>
 <!-- AOS + SweetAlert + Cart JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <script>
   function showCategory(category) {
     document.querySelectorAll('[id^="category-"]').forEach(el => el.classList.add('hidden'));
@@ -194,4 +283,5 @@
     }
   });
 </script>
+
 {% endblock %}

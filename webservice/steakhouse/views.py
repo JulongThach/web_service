@@ -16,7 +16,7 @@ from .cart import Cart
 BOT_TOKEN = "7808231868:AAHNf2dvyAm697DyB2wfLlrUS-PpniK29YI"
 CHAT_ID = "-4770597616"
 
-def send_telegram_message(name, phone, subject, message):
+def send_telegram_contact_us(name, phone, subject, message):
     text = f"📩 *New Message Received*\n\n👤 Name: {name}\n📱 Phone Number: {phone}\n📕 Subject: {subject}\n💬 Message: {message}"
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {"chat_id": CHAT_ID, "text": text, "parse_mode": "Markdown"}
@@ -34,11 +34,11 @@ def send_message(request):
             phone = form.cleaned_data["phone"]
             subject = form.cleaned_data["subject"]
             message = form.cleaned_data["message"]
-            send_telegram_message(name, phone, subject, message)
+            send_telegram_contact_us(name, phone, subject, message)
             return redirect('home') # Redirect after successful submission
     else:
         form = MessageForm()
-    return render(request, "homepage/home.html", {"form": form})
+    return render(request, "homepage/contact.html", {"form": form})
 
 # Show Product List
 def product_list(request):
@@ -58,7 +58,7 @@ def product_list(request):
         'spaghetti' : spaghetti,
         'add' : add,
         'steak' : steak,
-        'full_set' : full_set
+        'full_set' : full_set,
     }
     return render(request, 'steakhouse/product_list.html', context)
 
@@ -67,10 +67,6 @@ def add_to_cart(request, product_id):
     product = Product.objects.get(id=product_id)
     cart = Cart(request)
     cart.add(product, quantity=1)
-    
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return JsonResponse({'cart_item_count': len(cart)})
-    
     return redirect('product_list')
 
 #Update to cart
@@ -102,7 +98,6 @@ def view_cart(request):
     cart_data = request.session.get('cart', {})
     cart_items = []
     total_price = 0
-
     for product_id, item in cart_data.items():
         product = get_object_or_404(Product, id=product_id)
         quantity = item['quantity']
